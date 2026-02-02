@@ -15,14 +15,20 @@
 #   echo "✅ Page loaded successfully, size: $STATUS bytes"
 # fi
 
-URL="https://megahtex.com/thispagedoesntexist"
+URL="https://megahtex.com/"
 
-# Get HTTP status code
 STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "$URL")
 
-# Send status to Telegram
 MESSAGE="Website status check\nURL: $URL\nStatus code: $STATUS"
 
-curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
+# Debug output
+echo "Telegram token length: ${#TELEGRAM_TOKEN}"  # sanity check
+echo "Telegram chat ID: $TELEGRAM_CHAT_ID"
+echo "Message: $MESSAGE"
+
+# Send Telegram message and capture response
+RESPONSE=$(curl -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
   -d chat_id="${TELEGRAM_CHAT_ID}" \
-  -d text="$MESSAGE"
+  -d text="$MESSAGE")
+
+echo "Telegram API response: $RESPONSE"
