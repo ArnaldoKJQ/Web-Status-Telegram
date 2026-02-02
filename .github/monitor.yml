@@ -13,7 +13,7 @@ jobs:
 
       - name: Run monitor
         env:
-          TELEGRAM_TOKEN: ${{ TELEGRAM_BOT_MT_TOKEN }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_BOT_MT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_BOT_MT_UPTIME }}
         run: |
           chmod +x UpTime.sh
